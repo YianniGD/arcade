@@ -1,0 +1,164 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  /* Premium 2048 Color Palette - richer and more vibrant */
+  --bg-app: #fcfbfa;
+  --text-main: #776e65;
+  --text-light: #f9f6f2;
+
+  --bg-board: #bcaea0;
+  --bg-cell-empty: rgba(238, 228, 218, 0.45);
+
+  --tile-2: #eee4da;
+  --tile-4: #ede0c8;
+  --tile-8: #f2b179;
+  --tile-16: #f59563;
+  --tile-32: #f67c5f;
+  --tile-64: #f65e3b;
+  --tile-128: #edcf72;
+  --tile-256: #edcc61;
+  --tile-512: #edc850;
+  --tile-1024: #edc53f;
+  --tile-2048: #edc22e;
+
+  /* Tile text colors */
+  --color-2: #776e65;
+  --color-4: #776e65;
+  --color-light: #f9f6f2;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  overflow: hidden;
+  /* Prevent scrolling during swipe */
+  touch-action: none;
+  /* Disable browser's default touch actions for the game area */
+  background: radial-gradient(circle at center, #ffffff 0%, var(--bg-app) 100%);
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.app-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-size: 56px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-main);
+  letter-spacing: -2px;
+  text-align: center;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 44px;
+    letter-spacing: -1px;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes merge {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-app: #121212;
+    --text-main: #e0e0e0;
+    --bg-board: #333333;
+    --bg-cell-empty: rgba(255, 255, 255, 0.05);
+
+    --tile-2: #3a3a3a;
+    --tile-4: #4a4a4a;
+    --color-2: #e0e0e0;
+    --color-4: #e0e0e0;
+  }
+
+  body {
+    background: radial-gradient(circle at center, #2a2a2a 0%, var(--bg-app) 100%);
+  }
+
+  .title {
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+  }
+}

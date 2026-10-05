@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <radialGradient id="bg" cx="70%" cy="20%" r="90%">
+      <stop offset="0" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#0a0c10"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".35"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#fff" stroke-opacity=".04"/>
+    </pattern>
+    <g id="b"><rect width="26" height="26" rx="4"/><rect width="26" height="26" rx="4" fill="url(#sheen)"/></g>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <rect width="400" height="300" fill="url(#grid)"/>
+  <!-- falling T piece -->
+  <g fill="#8b5cf6" transform="translate(186 40)">
+    <use href="#b" x="0" y="0"/><use href="#b" x="28" y="0"/><use href="#b" x="56" y="0"/><use href="#b" x="28" y="28"/>
+  </g>
+  <!-- ghost -->
+  <g fill="none" stroke="#8b5cf6" stroke-opacity=".5" stroke-dasharray="3 3" transform="translate(186 160)">
+    <rect x="0" y="0" width="26" height="26" rx="4"/><rect x="28" y="0" width="26" height="26" rx="4"/><rect x="56" y="0" width="26" height="26" rx="4"/><rect x="28" y="28" width="26" height="26" rx="4"/>
+  </g>
+  <!-- stack -->
+  <g transform="translate(74 216)">
+    <g fill="#06b6d4"><use href="#b" x="0" y="0"/><use href="#b" x="0" y="28"/><use href="#b" x="0" y="56"/></g>
+    <g fill="#facc15"><use href="#b" x="28" y="28"/><use href="#b" x="56" y="28"/><use href="#b" x="28" y="56"/><use href="#b" x="56" y="56"/></g>
+    <g fill="#10b981"><use href="#b" x="84" y="28"/><use href="#b" x="112" y="28"/><use href="#b" x="84" y="56"/></g>
+    <g fill="#f43f5e"><use href="#b" x="112" y="56"/><use href="#b" x="140" y="56"/><use href="#b" x="168" y="56"/></g>
+    <g fill="#f97316"><use href="#b" x="196" y="0"/><use href="#b" x="196" y="28"/><use href="#b" x="196" y="56"/><use href="#b" x="224" y="56"/></g>
+    <g fill="#3b82f6"><use href="#b" x="252" y="28"/><use href="#b" x="252" y="56"/><use href="#b" x="224" y="28"/></g>
+  </g>
+</svg>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Tetris</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Navigation / Brand Bar -->
+    <header class="game-header">
+      <div class="brand">
+        <span class="brand-icon">■</span>
+        <h1 class="brand-title">TETRIS</h1>
+      </div>
+      <div class="header-controls">
+        <button id="btn-sound" class="btn-icon" aria-label="Toggle Sound" title="Sound (M)">
+          <svg id="icon-sound-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="icon-sound-off" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+        <button id="btn-pause-header" class="btn-icon" aria-label="Pause Game" title="Pause (P / Esc)">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+        </button>
+        <button id="btn-help" class="btn-icon" aria-label="Controls & Rules" title="Controls (?)">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Game Board & Panels Layout -->
+    <main class="game-stage">
+      <!-- Left Sidebar: Hold & Game Stats -->
+      <aside class="side-panel left-panel">
+        <section class="glass-card panel-hold">
+          <h2 class="card-label">HOLD</h2>
+          <div class="canvas-wrap preview-wrap">
+            <canvas id="hold-canvas" width="120" height="120"></canvas>
+          </div>
+          <span class="key-hint">Press <kbd>C</kbd> or <kbd>Shift</kbd></span>
+        </section>
+
+        <section class="glass-card panel-stats">
+          <div class="stat-group">
+            <span class="stat-label">LEVEL</span>
+            <span id="level-display" class="stat-val">1</span>
+          </div>
+          <div class="stat-group">
+            <span class="stat-label">LINES</span>
+            <span id="lines-display" class="stat-val">0</span>
+          </div>
+        </section>
+      </aside>
+
+      <!-- Center: Main Playfield -->
+      <section class="board-column">
+        <div class="board-frame" id="board-frame">
+          <canvas id="tetris-canvas" width="300" height="600"></canvas>
+          
+          <!-- Countdown / Floating Overlay -->
+          <div id="countdown-overlay" class="overlay-modal hidden">
+            <div id="countdown-text" class="countdown-number">3</div>
+          </div>
+
+          <!-- Pause Overlay -->
+          <div id="pause-overlay" class="overlay-modal hidden">
+            <div class="modal-card">
+              <h2 class="modal-title">PAUSED</h2>
+              <p class="modal-desc">Take a breather.</p>
+              <div class="modal-actions">
+                <button id="btn-resume" class="btn-primary">Resume</button>
+                <button id="btn-restart-pause" class="btn-secondary">Restart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Over Overlay -->
+          <div id="gameover-overlay" class="overlay-modal hidden">
+            <div class="modal-card">
+              <h2 class="modal-title gameover-text">GAME OVER</h2>
+              <div class="gameover-stats">
+                <div class="final-stat">
+                  <span>Final Score</span>
+                  <strong id="final-score">0</strong>
+                </div>
+                <div class="final-stat">
+                  <span>Lines Cleared</span>
+                  <strong id="final-lines">0</strong>
+                </div>
+              </div>
+              <div class="modal-actions">
+                <button id="btn-play-again" class="btn-primary">Play Again</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Sidebar: Score, High Score, Next Queue -->
+      <aside class="side-panel right-panel">
+        <section class="glass-card panel-score">
+          <div class="stat-group">
+            <span class="stat-label">SCORE</span>
+            <span id="score-display" class="stat-val highlight">0</span>
+          </div>
+          <div class="stat-group">
+            <span class="stat-label">HIGH SCORE</span>
+            <span id="high-score-display" class="stat-val sub">0</span>
+          </div>
+        </section>
+
+        <section class="glass-card panel-next">
+          <h2 class="card-label">NEXT</h2>
+          <div class="canvas-wrap preview-wrap">
+            <canvas id="next-canvas" width="120" height="320"></canvas>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <!-- Mobile/Touch Virtual Pad (Automatic display on touch devices) -->
+    <div class="touch-controls">
+      <div class="touch-group d-pad">
+        <button class="t-btn" id="t-left" aria-label="Move Left">◀</button>
+        <button class="t-btn" id="t-down" aria-label="Soft Drop">▼</button>
+        <button class="t-btn" id="t-right" aria-label="Move Right">▶</button>
+      </div>
+      <div class="touch-group action-pad">
+        <button class="t-btn t-hold" id="t-hold" aria-label="Hold Piece">HOLD</button>
+        <button class="t-btn t-rot" id="t-rot-ccw" aria-label="Rotate Counter-Clockwise">↺</button>
+        <button class="t-btn t-rot accent" id="t-rot-cw" aria-label="Rotate Clockwise">↻</button>
+        <button class="t-btn t-hard" id="t-hard" aria-label="Hard Drop">⤓</button>
+      </div>
+    </div>
+
+    <!-- Help Dialog / Modal -->
+    <dialog id="help-modal" class="native-dialog">
+      <div class="modal-inner">
+        <div class="modal-header">
+          <h3>Keyboard Controls</h3>
+          <button id="btn-close-help" class="btn-close" aria-label="Close dialog">×</button>
+        </div>
+        <div class="controls-grid">
+          <div class="control-row">
+            <span class="action-desc">Move Left / Right</span>
+            <div class="keys"><kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd></div>
+          </div>
+          <div class="control-row">
+            <span class="action-desc">Soft Drop (Fall faster)</span>
+            <div class="keys"><kbd>↓</kbd> or <kbd>S</kbd></div>
+          </div>
+          <div class="control-row">
+            <span class="action-desc">Hard Drop (Instant lock)</span>
+            <div class="keys"><kbd>Space</kbd></div>
+          </div>
+          <div class="control-row">
+            <span class="action-desc">Rotate Clockwise</span>
+            <div class="keys"><kbd>↑</kbd> or <kbd>W</kbd> / <kbd>X</kbd></div>
+          </div>
+          <div class="control-row">
+            <span class="action-desc">Rotate Counter-Clockwise</span>
+            <div class="keys"><kbd>Z</kbd> or <kbd>Ctrl</kbd></div>
+          </div>
+          <div class="control-row">
+            <span class="action-desc">Hold Piece</span>
+            <div class="keys"><kbd>C</kbd> or <kbd>Shift</kbd></div>
+          </div>
+          <div class="control-row">
+            <span class="action-desc">Pause / Resume</span>
+            <div class="keys"><kbd>P</kbd> or <kbd>Esc</kbd></div>
+          </div>
+          <div class="control-row">
+            <span class="action-desc">Toggle Sound</span>
+            <div class="keys"><kbd>M</kbd></div>
+          </div>
+        </div>
+        <div class="help-footer">
+          <p class="srs-note">Featuring full Guideline Super Rotation System (SRS) kicks, 7-bag fairness, lock-delay sliding, and procedural retro sound.</p>
+        </div>
+      </div>
+    </dialog>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="tetris.js"></script>
+</body>
+</html>

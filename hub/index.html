@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0c10">
+  <title>Arcade Classics</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="hub.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="hub-header">
+      <a class="brand" href="./" aria-label="Arcade Classics home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-text">
+          <span class="brand-title" data-hub-title>Arcade Classics</span>
+        </span>
+      </a>
+      <span class="counter" aria-live="polite"><span data-count>00</span> Titles</span>
+    </header>
+
+    <main>
+      <ul class="grid" data-grid role="list"></ul>
+      <p class="status" data-status hidden></p>
+    </main>
+
+    <footer class="hub-footer">
+      <span>Press <kbd>1</kbd>–<kbd data-max-key>9</kbd> to launch</span>
+    </footer>
+  </div>
+
+  <template id="card-tpl">
+    <li class="card-item">
+      <a class="card">
+        <figure class="cover">
+          <img alt="" loading="lazy" decoding="async">
+          <span class="cover-fallback" aria-hidden="true"></span>
+          <span class="index"></span>
+          <span class="badge" hidden>Last played</span>
+        </figure>
+        <div class="card-body">
+          <div class="card-head">
+            <h2 class="card-title"><span class="t"></span> <span class="s"></span></h2>
+            <span class="play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+            </span>
+          </div>
+          <p class="tagline"></p>
+          <ul class="tags" role="list"></ul>
+        </div>
+      </a>
+    </li>
+  </template>
+
+  <script type="module" src="hub.js"></script>
+</body>
+</html>

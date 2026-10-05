@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" font-family="Inter, system-ui, sans-serif" font-weight="800" text-anchor="middle">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="80%">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#efe6d8"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <g transform="translate(110 40) rotate(-6 90 110)">
+    <rect width="220" height="220" rx="14" fill="#bcaea0"/>
+    <g>
+      <rect x="10"  y="10"  width="95" height="95" rx="8" fill="#eee4da"/>
+      <rect x="115" y="10"  width="95" height="95" rx="8" fill="#f59563"/>
+      <rect x="10"  y="115" width="95" height="95" rx="8" fill="#edcf72"/>
+      <rect x="115" y="115" width="95" height="95" rx="8" fill="#edc22e" filter="url(#glow)" opacity=".8"/>
+      <rect x="115" y="115" width="95" height="95" rx="8" fill="#edc22e"/>
+    </g>
+    <text x="57.5"  y="74"  font-size="44" fill="#776e65">2</text>
+    <text x="162.5" y="74"  font-size="44" fill="#f9f6f2">16</text>
+    <text x="57.5"  y="178" font-size="36" fill="#f9f6f2">128</text>
+    <text x="162.5" y="176" font-size="30" fill="#f9f6f2">2048</text>
+  </g>
+</svg>

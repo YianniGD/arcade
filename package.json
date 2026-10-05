@@ -1,0 +1,11 @@
+{
+  "name": "arcade-classics",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "start": "node scripts/build.mjs && node scripts/serve.mjs"
+  }
+}
