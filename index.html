@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0c10">
+  <title>Arcade Classics</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/arcade.css">
+  <link rel="stylesheet" href="css/tetris.css">
+  <link rel="stylesheet" href="css/2048.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       VIEW 1: ARCADE CATALOG (HOME)
+       ========================================================================= -->
+  <section id="view-catalog" class="arcade-view active">
+    <div class="shell">
+      <header class="catalog-header">
+        <a class="brand" href="#/" aria-label="Arcade Classics home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="brand-text">
+            <span class="brand-title">Arcade Classics</span>
+          </span>
+        </a>
+        <span class="counter" aria-live="polite"><span>02</span> Titles</span>
+      </header>
+
+      <main>
+        <ul class="grid" role="list">
+          <!-- Game 1: Tetris -->
+          <li class="card-item" data-id="tetris">
+            <a class="card" href="#/tetris" style="--accent: #8b5cf6;" aria-label="Play Tetris">
+              <figure class="cover">
+                <img src="covers/tetris.svg" alt="Tetris cover art" loading="lazy" decoding="async">
+                <span class="index">01</span>
+                <span class="badge" data-last-badge hidden>Last played</span>
+              </figure>
+              <div class="card-body">
+                <div class="card-head">
+                  <h2 class="card-title">Tetris</h2>
+                  <span class="play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                  </span>
+                </div>
+                <p class="tagline">Guideline SRS rotation, 7-bag fairness, hold &amp; lock-delay.</p>
+                <ul class="tags" role="list">
+                  <li>Arcade</li>
+                  <li>Keyboard</li>
+                  <li>Touch</li>
+                </ul>
+              </div>
+            </a>
+          </li>
+
+          <!-- Game 2: 2048 -->
+          <li class="card-item" data-id="2048">
+            <a class="card" href="#/2048" style="--accent: #edc22e;" aria-label="Play 2048">
+              <figure class="cover">
+                <img src="covers/2048.svg" alt="2048 cover art" loading="lazy" decoding="async">
+                <span class="index">02</span>
+                <span class="badge" data-last-badge hidden>Last played</span>
+              </figure>
+              <div class="card-body">
+                <div class="card-head">
+                  <h2 class="card-title">2048 <span class="s">Swipe</span></h2>
+                  <span class="play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                  </span>
+                </div>
+                <p class="tagline">Slide, merge, and chase the golden tile.</p>
+                <ul class="tags" role="list">
+                  <li>Puzzle</li>
+                  <li>Touch</li>
+                  <li>Swipe</li>
+                </ul>
+              </div>
+            </a>
+          </li>
+
+          <!-- Slot 3 Expansion -->
+          <li class="card-item" aria-hidden="true">
+            <div class="slot">
+              <span class="slot-mark">+</span>
+              Slot 03<br>More soon
+            </div>
+          </li>
+        </ul>
+      </main>
+
+      <footer class="catalog-footer">
+        <span>Press <kbd>1</kbd>–<kbd>2</kbd> to launch</span>
+      </footer>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 2: TETRIS
+       ========================================================================= -->
+  <section id="view-tetris" class="arcade-view" hidden>
+    <!-- Top-Left Floating Back Button -->
+    <a href="#/" class="btn-return" aria-label="Back to Arcade Classics">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span>Back</span>
+    </a>
+
+    <div class="app-container">
+      <!-- Top Navigation Bar -->
+      <header class="game-header">
+        <div class="brand">
+          <span class="brand-icon">■</span>
+          <h1 class="brand-title">TETRIS</h1>
+        </div>
+        <div class="header-controls">
+          <button id="btn-sound" class="btn-icon" aria-label="Toggle Sound" title="Sound (M)">
+            <svg id="icon-sound-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg id="icon-sound-off" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+          <button id="btn-pause-header" class="btn-icon" aria-label="Pause Game" title="Pause (P / Esc)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+          <button id="btn-help" class="btn-icon" aria-label="Controls &amp; Rules" title="Controls (?)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Game Board & Panels -->
+      <main class="game-stage">
+        <!-- Left Sidebar: Hold & Stats -->
+        <aside class="side-panel left-panel">
+          <section class="glass-card panel-hold">
+            <h2 class="card-label">HOLD</h2>
+            <div class="canvas-wrap preview-wrap">
+              <canvas id="hold-canvas" width="120" height="120"></canvas>
+            </div>
+            <span class="key-hint">Press <kbd>C</kbd> or <kbd>Shift</kbd></span>
+          </section>
+
+          <section class="glass-card panel-stats">
+            <div class="stat-group">
+              <span class="stat-label">LEVEL</span>
+              <span id="level-display" class="stat-val">1</span>
+            </div>
+            <div class="stat-group">
+              <span class="stat-label">LINES</span>
+              <span id="lines-display" class="stat-val">0</span>
+            </div>
+          </section>
+        </aside>
+
+        <!-- Center: Playfield -->
+        <section class="board-column">
+          <div class="board-frame" id="board-frame">
+            <canvas id="tetris-canvas" width="300" height="600"></canvas>
+
+            <!-- Countdown Overlay -->
+            <div id="countdown-overlay" class="overlay-modal hidden">
+              <div id="countdown-text" class="countdown-number">3</div>
+            </div>
+
+            <!-- Pause Overlay -->
+            <div id="pause-overlay" class="overlay-modal hidden">
+              <div class="modal-card">
+                <h2 class="modal-title">PAUSED</h2>
+                <p class="modal-desc">Take a breather.</p>
+                <div class="modal-actions">
+                  <button id="btn-resume" class="btn-primary">Resume</button>
+                  <button id="btn-restart-pause" class="btn-secondary">Restart</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Game Over Overlay -->
+            <div id="gameover-overlay" class="overlay-modal hidden">
+              <div class="modal-card">
+                <h2 class="modal-title gameover-text">GAME OVER</h2>
+                <div class="gameover-stats">
+                  <div class="final-stat">
+                    <span>Final Score</span>
+                    <strong id="final-score">0</strong>
+                  </div>
+                  <div class="final-stat">
+                    <span>Lines Cleared</span>
+                    <strong id="final-lines">0</strong>
+                  </div>
+                </div>
+                <div class="modal-actions">
+                  <button id="btn-play-again" class="btn-primary">Play Again</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Sidebar: Score & Next -->
+        <aside class="side-panel right-panel">
+          <section class="glass-card panel-score">
+            <div class="stat-group">
+              <span class="stat-label">SCORE</span>
+              <span id="score-display" class="stat-val highlight">0</span>
+            </div>
+            <div class="stat-group">
+              <span class="stat-label">HIGH SCORE</span>
+              <span id="high-score-display" class="stat-val sub">0</span>
+            </div>
+          </section>
+
+          <section class="glass-card panel-next">
+            <h2 class="card-label">NEXT</h2>
+            <div class="canvas-wrap preview-wrap">
+              <canvas id="next-canvas" width="120" height="320"></canvas>
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      <!-- Mobile/Touch Virtual Pad -->
+      <div class="touch-controls">
+        <div class="touch-group d-pad">
+          <button class="t-btn" id="t-left" aria-label="Move Left">◀</button>
+          <button class="t-btn" id="t-down" aria-label="Soft Drop">▼</button>
+          <button class="t-btn" id="t-right" aria-label="Move Right">▶</button>
+        </div>
+        <div class="touch-group action-pad">
+          <button class="t-btn t-hold" id="t-hold" aria-label="Hold Piece">HOLD</button>
+          <button class="t-btn t-rot" id="t-rot-ccw" aria-label="Rotate Counter-Clockwise">↺</button>
+          <button class="t-btn t-rot accent" id="t-rot-cw" aria-label="Rotate Clockwise">↻</button>
+          <button class="t-btn t-hard" id="t-hard" aria-label="Hard Drop">⤓</button>
+        </div>
+      </div>
+
+      <!-- Help Dialog -->
+      <dialog id="help-modal" class="native-dialog">
+        <div class="modal-inner">
+          <div class="modal-header">
+            <h3>Keyboard Controls</h3>
+            <button id="btn-close-help" class="btn-close" aria-label="Close dialog">×</button>
+          </div>
+          <div class="controls-grid">
+            <div class="control-row">
+              <span class="action-desc">Move Left / Right</span>
+              <div class="keys"><kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Soft Drop (Fall faster)</span>
+              <div class="keys"><kbd>↓</kbd> or <kbd>S</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Hard Drop (Instant lock)</span>
+              <div class="keys"><kbd>Space</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Rotate Clockwise</span>
+              <div class="keys"><kbd>↑</kbd> or <kbd>W</kbd> / <kbd>X</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Rotate Counter-Clockwise</span>
+              <div class="keys"><kbd>Z</kbd> or <kbd>Ctrl</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Hold Piece</span>
+              <div class="keys"><kbd>C</kbd> or <kbd>Shift</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Pause / Resume</span>
+              <div class="keys"><kbd>P</kbd> or <kbd>Esc</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Toggle Sound</span>
+              <div class="keys"><kbd>M</kbd></div>
+            </div>
+          </div>
+          <div class="help-footer">
+            <p class="srs-note">Featuring full Guideline Super Rotation System (SRS) kicks, 7-bag fairness, lock-delay sliding, and procedural retro sound.</p>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 3: 2048
+       ========================================================================= -->
+  <section id="view-2048" class="arcade-view" hidden>
+    <!-- Top-Left Floating Back Button -->
+    <a href="#/" class="btn-return" aria-label="Back to Arcade Classics">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span>Back</span>
+    </a>
+
+    <div class="container-2048">
+      <header class="header-2048">
+        <h1 class="title-2048">2048</h1>
+        <div class="toolbar-2048">
+          <div class="btn-group-2048">
+            <button id="btn-2048-undo" class="btn-action-2048" disabled>Undo</button>
+            <button id="btn-2048-new" class="btn-action-2048">New Game</button>
+          </div>
+          <div class="stats-group-2048">
+            <div class="stat-box-2048">
+              <div class="stat-lbl">Score</div>
+              <div class="stat-num" id="val-2048-score">0</div>
+              <div id="score-float-container"></div>
+            </div>
+            <div class="stat-box-2048">
+              <div class="stat-lbl">Best</div>
+              <div class="stat-num" id="val-2048-best">0</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="board-wrapper-2048">
+        <div class="board-2048">
+          <!-- 4x4 Grid Background Cells -->
+          <div class="grid-bg-2048">
+            <div class="cell-bg-2048"></div><div class="cell-bg-2048"></div><div class="cell-bg-2048"></div><div class="cell-bg-2048"></div>
+            <div class="cell-bg-2048"></div><div class="cell-bg-2048"></div><div class="cell-bg-2048"></div><div class="cell-bg-2048"></div>
+            <div class="cell-bg-2048"></div><div class="cell-bg-2048"></div><div class="cell-bg-2048"></div><div class="cell-bg-2048"></div>
+            <div class="cell-bg-2048"></div><div class="cell-bg-2048"></div><div class="cell-bg-2048"></div><div class="cell-bg-2048"></div>
+          </div>
+
+          <!-- Dynamic Animated Tiles -->
+          <div id="tile-container-2048" class="tile-container-2048"></div>
+
+          <!-- Win Overlay -->
+          <div id="overlay-2048-win" class="overlay-2048 win" hidden>
+            <h2>You Win!</h2>
+            <div class="overlay-btn-group">
+              <button id="btn-2048-keep-going">Keep going</button>
+              <button id="btn-2048-try-again-win">Try again</button>
+            </div>
+          </div>
+
+          <!-- Game Over Overlay -->
+          <div id="overlay-2048-over" class="overlay-2048 gameover" hidden>
+            <h2>Game Over!</h2>
+            <div class="overlay-btn-group">
+              <button id="btn-2048-try-again-over">Try again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/tetris.js"></script>
+  <script src="js/2048.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

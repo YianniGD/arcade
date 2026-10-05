@@ -1,46 +1,32 @@
 # Arcade Classics
 
-Landing page and unified collection for classic web games.
+Unified, zero-build web arcade featuring classic games. Pure HTML5, CSS3, and ES6.
 
 ```
-hub/              ← landing source (edit here)
-  games.json      ← THE REGISTRY — add games here
-  covers/         ← 4:3 cover art (SVG/PNG/WebP)
-  index.html · hub.css · hub.js
-  return-button.js← "‹ Back" chip injected into each game at build
-tetris/ · 2048/   ← game sources (never modified by the collection)
-scripts/          ← build.mjs + serve.mjs (zero dependencies)
-site/             ← build output — deploy this folder
+index.html        ← Root SPA entry point (deploys anywhere)
+css/
+  arcade.css      ← Shared theme & catalog layout
+  tetris.css      ← Tetris styles
+  2048.css        ← 2048 styles & animations
+js/
+  app.js          ← SPA router & view transitions
+  audio.js        ← Web Audio procedural synthesizer
+  tetris.js       ← SRS Guideline Tetris engine
+  2048.js         ← Vanilla 2048 engine (undo & swipe)
+covers/           ← SVG game covers
+favicon.svg       ← Favicon
+games.json        ← Game catalog registry
 ```
 
-## Run
+## Run Locally
 
 ```sh
-npm start          # build + serve at http://localhost:4173
-npm run build      # build only  (npm run build -- tetris  → one game)
+npm start         # Zero-dependency static server at http://localhost:4173
 ```
+Or open `index.html` directly in any web browser.
 
-## Add a game
+## Cloudflare Pages / GitHub Pages Deployment
 
-1. Drop the game folder next to `tetris/`.
-2. Add a cover to `hub/covers/` (4:3, e.g. 800×600).
-3. Add an entry to `hub/games.json`:
-
-```json
-{
-  "id": "snake",                 // URL → /snake/
-  "title": "Snake",
-  "subtitle": "Neon",
-  "tagline": "One line about the game.",
-  "source": "snake",             // folder name
-  "type": "static",              // "static" = plain HTML · "vite" = Vite project
-  "accent": "#10b981",           // card glow + play button colour
-  "cover": "covers/snake.svg",   // optional — falls back to a monogram
-  "tags": ["Arcade", "Keyboard"],
-  "returnButton": "top-left"     // top-/bottom- left/right, or false
-}
-```
-
-4. `npm start`.
-
-Hub-level options (`"hub"` object): `title`, `subtitle`, `showNextSlot` (false hides the dashed placeholder card).
+No build command or framework configuration required:
+- **Build command:** None (leave empty)
+- **Build output directory:** `/` (root)

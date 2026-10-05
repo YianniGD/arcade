@@ -814,6 +814,9 @@
 
   function setupInput() {
     window.addEventListener('keydown', e => {
+      const tetrisView = document.getElementById('view-tetris');
+      if (!tetrisView || !tetrisView.classList.contains('active')) return;
+
       window.soundEngine.init();
 
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
@@ -1007,6 +1010,27 @@
     setupInput();
     startNewGame();
   }
+
+  function pause() {
+    if (!isPaused && !isGameOver) {
+      togglePause();
+    }
+  }
+
+  function resume() {
+    if (isPaused && !isGameOver) {
+      togglePause();
+    }
+  }
+
+  window.tetrisGame = {
+    init,
+    startNewGame,
+    pause,
+    resume,
+    togglePause,
+    toggleMute,
+  };
 
   // Launch on DOM Ready
   if (document.readyState === 'loading') {
