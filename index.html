@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="css/arcade.css">
   <link rel="stylesheet" href="css/tetris.css">
   <link rel="stylesheet" href="css/2048.css">
+  <link rel="stylesheet" href="css/galaga.css">
 </head>
 <body>
 
@@ -28,7 +29,7 @@
             <span class="brand-title">Arcade Classics</span>
           </span>
         </a>
-        <span class="counter" aria-live="polite"><span>02</span> Titles</span>
+        <span class="counter" aria-live="polite"><span>03</span> Titles</span>
       </header>
 
       <main>
@@ -83,18 +84,43 @@
             </a>
           </li>
 
-          <!-- Slot 3 Expansion -->
+          <!-- Game 3: Galaga -->
+          <li class="card-item" data-id="galaga">
+            <a class="card" href="#/galaga" style="--accent: #38bdf8;" aria-label="Play Galaga">
+              <figure class="cover">
+                <img src="covers/galaga.svg" alt="Galaga cover art" loading="lazy" decoding="async">
+                <span class="index">03</span>
+                <span class="badge" data-last-badge hidden>Last played</span>
+              </figure>
+              <div class="card-body">
+                <div class="card-head">
+                  <h2 class="card-title">Galaga</h2>
+                  <span class="play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                  </span>
+                </div>
+                <p class="tagline">Dodge alien swoops, fire dual cannons, and defend the sector.</p>
+                <ul class="tags" role="list">
+                  <li>Arcade</li>
+                  <li>Shooter</li>
+                  <li>Retro</li>
+                </ul>
+              </div>
+            </a>
+          </li>
+
+          <!-- Slot 4 Expansion -->
           <li class="card-item" aria-hidden="true">
             <div class="slot">
               <span class="slot-mark">+</span>
-              Slot 03<br>More soon
+              Slot 04<br>More soon
             </div>
           </li>
         </ul>
       </main>
 
       <footer class="catalog-footer">
-        <span>Press <kbd>1</kbd>–<kbd>2</kbd> to launch</span>
+        <span>Press <kbd>1</kbd>–<kbd>3</kbd> to launch</span>
       </footer>
     </div>
   </section>
@@ -364,10 +390,135 @@
     </div>
   </section>
 
+  <!-- =========================================================================
+       VIEW 4: GALAGA
+       ========================================================================= -->
+  <section id="view-galaga" class="arcade-view" hidden>
+    <!-- Top-Left Floating Back Button -->
+    <a href="#/" class="btn-return" aria-label="Back to Arcade Classics">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span>Back</span>
+    </a>
+
+    <div class="app-container-galaga">
+      <!-- Top Navigation Bar -->
+      <header class="header-galaga">
+        <div class="brand-galaga">
+          <span class="brand-icon-galaga">▲</span>
+          <h1 class="title-galaga">GALAGA</h1>
+        </div>
+        <div class="header-controls-galaga">
+          <button id="btn-sound-galaga" class="btn-icon" aria-label="Toggle Sound" title="Sound (M)">
+            <svg id="icon-sound-on-galaga" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg id="icon-sound-off-galaga" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+          <button id="btn-pause-galaga" class="btn-icon" aria-label="Pause Game" title="Pause (P / Esc)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+          <button id="btn-help-galaga" class="btn-icon" aria-label="Controls &amp; Rules" title="Controls (?)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Stage -->
+      <main class="stage-galaga">
+        <div class="canvas-frame-galaga">
+          <canvas id="galaga-canvas"></canvas>
+
+          <!-- Pause Overlay -->
+          <div id="overlay-galaga-pause" class="overlay-galaga" hidden>
+            <h2 class="overlay-title-galaga" style="color: #38bdf8;">PAUSED</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">System standing by.</p>
+            <div style="display: flex; gap: 12px;">
+              <button id="btn-galaga-resume" class="btn-galaga">Resume</button>
+              <button id="btn-galaga-restart-pause" class="btn-galaga" style="background: rgba(255,255,255,0.1); box-shadow: none;">Restart</button>
+            </div>
+          </div>
+
+          <!-- Game Over Overlay -->
+          <div id="overlay-galaga-gameover" class="overlay-galaga" hidden>
+            <h2 class="overlay-title-galaga">GAME OVER</h2>
+            <div class="overlay-stats-galaga">
+              <div class="overlay-stat-item">
+                <span>Final Score</span>
+                <strong id="val-galaga-final-score">0</strong>
+              </div>
+              <div class="overlay-stat-item">
+                <span>Stage Reached</span>
+                <strong id="val-galaga-final-stage">1</strong>
+              </div>
+            </div>
+            <button id="btn-galaga-play-again" class="btn-galaga">Play Again</button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Mobile Touch Controls -->
+      <div class="touch-controls-galaga">
+        <div class="touch-dpad-galaga">
+          <button class="t-btn-galaga" id="t-galaga-left" aria-label="Move Left">◀</button>
+          <button class="t-btn-galaga" id="t-galaga-right" aria-label="Move Right">▶</button>
+        </div>
+        <button class="t-btn-galaga t-btn-fire-galaga" id="t-galaga-fire" aria-label="Fire Lasers">FIRE</button>
+      </div>
+
+      <!-- Help Dialog -->
+      <dialog id="help-modal-galaga" class="native-dialog">
+        <div class="modal-inner">
+          <div class="modal-header">
+            <h3>Galaga Controls</h3>
+            <button id="btn-close-help-galaga" class="btn-close" aria-label="Close dialog">×</button>
+          </div>
+          <div class="controls-grid">
+            <div class="control-row">
+              <span class="action-desc">Move Left / Right</span>
+              <div class="keys"><kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Fire Laser Cannon</span>
+              <div class="keys"><kbd>Space</kbd> or <kbd>↑</kbd> / <kbd>W</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Touch Screens</span>
+              <div class="keys"><kbd>Touch D-Pad</kbd> or <kbd>Drag Ship</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Pause / Resume</span>
+              <div class="keys"><kbd>P</kbd> or <kbd>Esc</kbd></div>
+            </div>
+            <div class="control-row">
+              <span class="action-desc">Toggle Sound</span>
+              <div class="keys"><kbd>M</kbd></div>
+            </div>
+          </div>
+          <div class="help-footer">
+            <p class="srs-note">Aliens award double points when destroyed while diving. Boss Galagas require two direct hits to destroy.</p>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  </section>
+
   <!-- Scripts -->
   <script src="js/audio.js"></script>
   <script src="js/tetris.js"></script>
   <script src="js/2048.js"></script>
+  <script src="js/galaga.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
     catalog: document.getElementById('view-catalog'),
     tetris: document.getElementById('view-tetris'),
     '2048': document.getElementById('view-2048'),
+    galaga: document.getElementById('view-galaga'),
   };
 
   let currentView = 'catalog';
@@ -19,6 +20,7 @@
     const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
     if (hash === 'tetris') return 'tetris';
     if (hash === '2048') return '2048';
+    if (hash === 'galaga') return 'galaga';
     return 'catalog';
   }
 
@@ -37,6 +39,9 @@
     // 1. Pause any running game
     if (currentView === 'tetris' && window.tetrisGame) {
       window.tetrisGame.pause();
+    }
+    if (currentView === 'galaga' && window.galagaGame) {
+      window.galagaGame.pause();
     }
 
     // 2. Hide all views & show target
@@ -65,6 +70,11 @@
       document.title = '2048 — Arcade Classics';
       localStorage.setItem(LAST_KEY, '2048');
       updateLastPlayedBadges();
+    } else if (target === 'galaga') {
+      document.title = 'Galaga — Arcade Classics';
+      localStorage.setItem(LAST_KEY, 'galaga');
+      updateLastPlayedBadges();
+      if (window.galagaGame) window.galagaGame.resume();
     } else {
       document.title = 'Arcade Classics';
       updateLastPlayedBadges();
@@ -77,12 +87,14 @@
   window.addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
 
-    // If on catalog view: 1 launches Tetris, 2 launches 2048
+    // If on catalog view: 1 launches Tetris, 2 launches 2048, 3 launches Galaga
     if (currentView === 'catalog') {
       if (e.key === '1') {
         window.location.hash = '#/tetris';
       } else if (e.key === '2') {
         window.location.hash = '#/2048';
+      } else if (e.key === '3') {
+        window.location.hash = '#/galaga';
       }
     }
   });
@@ -96,10 +108,9 @@
   function init() {
     updateLastPlayedBadges();
 
-    // Init 2048
-    if (window.game2048) {
-      window.game2048.init();
-    }
+    // Init games
+    if (window.game2048) window.game2048.init();
+    if (window.galagaGame) window.galagaGame.init();
 
     // Switch to initial route
     switchView(getTargetView());

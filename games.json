@@ -17,6 +17,14 @@
       "accent": "#edc22e",
       "cover": "covers/2048.svg",
       "tags": ["Puzzle", "Touch", "Swipe"]
+    },
+    {
+      "id": "galaga",
+      "title": "Galaga",
+      "tagline": "Dodge alien swoops, fire dual cannons, and defend the sector.",
+      "accent": "#38bdf8",
+      "cover": "covers/galaga.svg",
+      "tags": ["Arcade", "Shooter", "Retro"]
     }
   ]
 }
